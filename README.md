@@ -2,5 +2,5 @@
 
 #### 2a)
 * La relación Cadete-Cadetería es una relación por composición.<br>La relación Cadete-Pedido es una relación por agregación.<br>La relación Pedido-Cliente es una relación por composición.
-* Ninguno
+* Cadetería:<br>Agregar cadete.
 * 
