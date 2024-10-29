@@ -1,27 +1,28 @@
-class Cadeteria {
-    private string nombre;
-    private string telefono;
-    private List<Cadete> listadoCadetes;
+using CadeteSpace;
 
-    public Cadeteria(string nombre, string telefono) {
-        this.nombre = nombre;
-        this.telefono = telefono;
+namespace CadeteriaSpace {
+    public class Cadeteria {
+        private string nombre;
+        private string telefono;
+        private List<Cadete> listadoCadetes;
+
+        public Cadeteria() {
+            nombre = null;
+            telefono = null;
+            listadoCadetes = [];
+        } 
+        public Cadeteria(string nombre, string telefono) {
+            this.nombre = nombre;
+            this.telefono = telefono;
+            listadoCadetes = [];
+        }
+
+        public string Nombre {get=>nombre;set=>nombre=value;}
+        public string Telefono {get=>telefono;set=>telefono=value;}
+        public List<Cadete> ListadoCadetes {get=>listadoCadetes;}
+
+        public void AgregarCadete(Cadete cadete) {
+            listadoCadetes.Add(cadete);
+        }
     }
-
-    public void AgregarCadete(Cadete cadete) {
-        listadoCadetes.Add(cadete);
-    }
-}
-
-class Cadete {
-    private int id;
-    private string nombre;
-    private string direccion;
-    private string telefono;
-    private List<Pedido> listadoPedidos;
-    private int pedidosDespachados;
-}
-
-class Pedido {
-
 }
