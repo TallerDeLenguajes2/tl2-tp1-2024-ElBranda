@@ -8,7 +8,6 @@ using System.Diagnostics;
 
 Cliente cliente = new("Etelredo I", "Castillo de Highclere", "+44 1635 253210", "Al lado del Highclere Park");
 Cadeteria cadeteria = new();
-List<Pedido> pedidosNoAsignados = [];
 bool salir = false;
 
 if (Helper.CargarDesdeCSV(ref cadeteria)) {
@@ -16,23 +15,20 @@ if (Helper.CargarDesdeCSV(ref cadeteria)) {
         Console.Clear();
         Console.WriteLine("------------ MENÚ ------------");
         Console.WriteLine("a) Dar de alta pedidos");
-        Console.WriteLine("b) Asignarlos a cadetes");
-        Console.WriteLine("c) Cambiarlos de estado");
-        Console.WriteLine("d) Reasignar pedido a otro cadete");
+        //Console.WriteLine("b) Asignarlos a cadetes");
+        Console.WriteLine("b) Cambiarlos de estado");
+        Console.WriteLine("c) Reasignar pedido a otro cadete");
         Console.Write("Comando: ");
         char command = Console.ReadKey().KeyChar; Console.WriteLine();
 
         switch (command) {
             case 'a':
-                Helper.DarDeAlta(cliente, ref pedidosNoAsignados);
+                Helper.DarDeAlta(cliente, ref cadeteria);
                 break;
             case 'b':
-                Helper.AsignarACadete(ref cadeteria, ref pedidosNoAsignados);
-                break;
-            case 'c':
                 Helper.CambiarEstado(ref cadeteria);
                 break;
-            case 'd':
+            case 'c':
                 Helper.ReasignarPedido(ref cadeteria);
                 break;
             case 'q': Helper.Informe(ref cadeteria); salir=true; break;

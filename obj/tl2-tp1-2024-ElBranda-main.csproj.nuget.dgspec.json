@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marti\\Documents\\Facu\\TL2\\TP1\\tl2-tp1-2024-ElBranda-main\\tl2-tp1-2024-ElBranda-main.csproj": {}
+    "C:\\Users\\tinij\\OneDrive\\Escritorio\\tp2\\tl2-tp1-2024-ElBranda\\tl2-tp1-2024-ElBranda-main.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marti\\Documents\\Facu\\TL2\\TP1\\tl2-tp1-2024-ElBranda-main\\tl2-tp1-2024-ElBranda-main.csproj": {
+    "C:\\Users\\tinij\\OneDrive\\Escritorio\\tp2\\tl2-tp1-2024-ElBranda\\tl2-tp1-2024-ElBranda-main.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marti\\Documents\\Facu\\TL2\\TP1\\tl2-tp1-2024-ElBranda-main\\tl2-tp1-2024-ElBranda-main.csproj",
+        "projectUniqueName": "C:\\Users\\tinij\\OneDrive\\Escritorio\\tp2\\tl2-tp1-2024-ElBranda\\tl2-tp1-2024-ElBranda-main.csproj",
         "projectName": "tl2-tp1-2024-ElBranda-main",
-        "projectPath": "C:\\Users\\marti\\Documents\\Facu\\TL2\\TP1\\tl2-tp1-2024-ElBranda-main\\tl2-tp1-2024-ElBranda-main.csproj",
-        "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marti\\Documents\\Facu\\TL2\\TP1\\tl2-tp1-2024-ElBranda-main\\obj\\",
+        "projectPath": "C:\\Users\\tinij\\OneDrive\\Escritorio\\tp2\\tl2-tp1-2024-ElBranda\\tl2-tp1-2024-ElBranda-main.csproj",
+        "packagesPath": "C:\\Users\\tinij\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tinij\\OneDrive\\Escritorio\\tp2\\tl2-tp1-2024-ElBranda\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\marti\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\tinij\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -11,55 +11,68 @@ namespace HelperSpace {
             string path1 = "CSV/Cadeteria.csv";
             string path2 = "CSV/Cadetes.csv";
 
-            if (File.Exists(path1) && File.Exists(path2)) {
+            if (File.Exists(path1)) {
                 //CARGA DE CADETERIA
                 string[] linea = File.ReadAllLines(path1);
                 var data = linea[0].Split(',');
 
                 cadeteria.Nombre = data[0];
                 cadeteria.Telefono = data[1];
+            } else {
+                Console.WriteLine("NO SE PUDO CARGAR CADETERIA.CSV");
+                return false;
+            }
 
+            if (File.Exists(path2)) {
                 //CARGA DE CADETES
+                string[] linea = File.ReadAllLines(path2);
+                var data = linea[0].Split(',');
+
                 linea = File.ReadAllLines(path2);
                 foreach (var line in linea) {
                     data = line.Split(',');
                     Cadete cadete = new(int.Parse(data[0]), data[1], data[2], data[3]);
                     cadeteria.AgregarCadete(cadete);
                 } 
-            } else return false;
+            } else {
+                Console.WriteLine("NO SE PUDO CARGAR CADETES.CSV");
+
+                return false;
+            }
 
             return true;
         }
 
-        public static void DarDeAlta(Cliente cliente, ref List<Pedido> pedidosNoAsignados) {
-            string nro, obs;
+        public static void DarDeAlta(Cliente cliente, ref Cadeteria cadeteria) {
+            int nro;
+            string obs;
 
-            nro = ""+new Random().Next(0,100000);
+            nro = new Random().Next(0,100000);
 
             Console.Write("OBS: ");
             obs = Console.ReadLine();
 
-            Pedido pedido = new(nro, obs, cliente);
+            Pedido pedido = new(nro, obs, cliente, cadeteria.ListadoCadetes[new Random().Next(0,cadeteria.ListadoCadetes.Count)]);
 
-            pedidosNoAsignados.Add(pedido);
+            cadeteria.AgregarPedido(pedido);
         }
 
-        public static void AsignarACadete(ref Cadeteria cadeteria, ref List<Pedido> pedidosNoAsignados) {
-            if (cadeteria.ListadoCadetes.Count == 0) {
-                Console.WriteLine("No hay cadetes disponibles...");
-                return;
-            }
+        // public static void AsignarACadete(ref Cadeteria cadeteria, ref List<Pedido> pedidosNoAsignados) {
+        //     if (cadeteria.ListadoCadetes.Count == 0) {
+        //         Console.WriteLine("No hay cadetes disponibles...");
+        //         return;
+        //     }
 
-            if (pedidosNoAsignados.Count == 0) {
-                Console.WriteLine("No hay pedidos disponibles...");
-                return;
-            }
+        //     if (pedidosNoAsignados.Count == 0) {
+        //         Console.WriteLine("No hay pedidos disponibles...");
+        //         return;
+        //     }
 
-            int elegirCadete = new Random().Next(0,cadeteria.ListadoCadetes.Count);
+        //     int elegirCadete = new Random().Next(0,cadeteria.ListadoCadetes.Count);
 
-            cadeteria.ListadoCadetes[elegirCadete].AgregarPedido(pedidosNoAsignados[0]);
-            pedidosNoAsignados.RemoveAt(0);
-        }
+        //     cadeteria.ListadoCadetes[elegirCadete].AgregarPedido(pedidosNoAsignados[0]);
+        //     pedidosNoAsignados.RemoveAt(0);
+        // }
 
         public static void CambiarEstado(ref Cadeteria cadeteria) {
             if (cadeteria.ListadoCadetes.Count == 0) {
@@ -68,28 +81,26 @@ namespace HelperSpace {
             }
 
             Console.WriteLine("Qué cadete quiere ver: ");
-            foreach(var c in cadeteria.ListadoCadetes) {
-                if (c.ListaPedidos.Count > 0) {
-                    c.VerDatosCadete();
-                    Console.WriteLine();
-                }
+            foreach(var c in cadeteria.listadoPedidos) {
+                c.cadete.VerDatosCadete();
+                Console.WriteLine();
             }
             int ccad = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Qué pedido quiere cambiar estado: ");
-            foreach (var p in cadeteria.ListadoCadetes[ccad-1].ListaPedidos) {
+            foreach (var p in cadeteria.listadoPedidos) {
                 p.VerDatosPedido();
                 Console.WriteLine();
             }
 
             int cped = int.Parse(Console.ReadLine());
 
-            var pedido = cadeteria.ListadoCadetes[ccad - 1].ListaPedidos[cped - 1];
+            var pedido = cadeteria.listadoPedidos[cped - 1];
 
             if (pedido.Estate == Pedido.Estado.LLEVANDO_PEDIDO) {
-                cadeteria.ListadoCadetes[ccad-1].pedidosDespachados++;
-                cadeteria.ListadoCadetes[ccad-1].ListaPedidos.RemoveAt(cped-1);
-            } else cadeteria.ListadoCadetes[ccad - 1].ListaPedidos[cped - 1].Estate = (Pedido.Estado)(((int)pedido.Estate) + 1);
+                cadeteria.listadoPedidos[cped-1].cadete.pedidosDespachados++;
+                cadeteria.listadoPedidos.RemoveAt(cped-1);
+            } else cadeteria.listadoPedidos[cped - 1].Estate = (Pedido.Estado)(((int)pedido.Estate) + 1);
         }
 
         public static void ReasignarPedido(ref Cadeteria cadeteria) {
@@ -98,30 +109,24 @@ namespace HelperSpace {
                 return;
             }
 
-            Console.WriteLine("Qué cadete quiere reasignarle el pedido y a quien asignarle: ");
-            foreach(var c in cadeteria.ListadoCadetes) {
-                if (c.ListaPedidos.Count > 0) {
-                    c.VerDatosCadete();
-                    Console.WriteLine();
-                }
-            }
-
-            Console.WriteLine("Reasignarle a: ");
-            int ccad1 = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Asignarle a: ");
-            int ccad2 = int.Parse(Console.ReadLine());
-
             Console.WriteLine("Qué pedido quiere reasignar: ");
-            foreach (var p in cadeteria.ListadoCadetes[ccad1-1].ListaPedidos) {
-                p.VerDatosPedido();
+            foreach(var c in cadeteria.listadoPedidos) {
+                c.VerDatosPedido();
                 Console.WriteLine();
             }
 
-            int cped = int.Parse(Console.ReadLine());
+            int ped = int.Parse(Console.ReadLine());
 
-            cadeteria.ListadoCadetes[ccad2-1].AgregarPedido(cadeteria.ListadoCadetes[ccad1-1].ListaPedidos[cped-1]);
-            cadeteria.ListadoCadetes[ccad1-1].ListaPedidos.RemoveAt(cped-1);
+            Console.WriteLine("Reasignarlo a: ");
+            
+            foreach(var c in cadeteria.ListadoCadetes) {
+                c.VerDatosCadete();
+                Console.WriteLine();
+            }
+
+            int cad = int.Parse(Console.ReadLine());
+
+            cadeteria.listadoPedidos[ped-1].cadete = cadeteria.ListadoCadetes[cad-1];
         }
 
         public static void Informe(ref Cadeteria cadeteria) {
@@ -131,13 +136,13 @@ namespace HelperSpace {
                 return;
             }
 
-            int ganancia=0, promedio=0;
+            float ganancia=0, promedio=0;
 
             foreach(var c in cadeteria.ListadoCadetes) {
                 c.VerDatosCadete();
-                Console.WriteLine("Total a cobrar: "+c.JornalACobrar());
+                Console.WriteLine("Total a cobrar: "+cadeteria.JornalACobrar(c.id));
                 Console.WriteLine("Pedidos totales: "+c.pedidosDespachados);
-                ganancia+=c.JornalACobrar();
+                ganancia+=cadeteria.JornalACobrar(c.id);
                 promedio+=c.pedidosDespachados;
             }
 
